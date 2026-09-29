@@ -1,0 +1,18 @@
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Validation data (hard rule from PDF: NEVER commit or use for modelling)
+data/for_validation_only/

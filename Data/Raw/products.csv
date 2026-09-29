@@ -1,0 +1,38 @@
+product_id,category,sub_category,brand,mrp,cost_price,shelf_life_days,supplier_id
+P101,Dairy,Milk,Aavin,60,52,3.0,SUP01
+P102, Dairy ,Curd,Aavin,35,28,7.0,SUP01
+P103,Dairy,Butter,Amul,58,48,90.0,SUP02
+P104,dairy,Paneer,FreshFarm,90,72,15.0,SUP02
+P105,Dairy,Cheese,DairyDay,140,110,120.0,SUP02
+P330,Beverages,Soft Drink,FizzUp,50,31,180.0,SUP04
+P331,Beverages,Soft Drink,FizzUp,95,62,180.0,SUP04
+P332,BEVERAGES,Juice,Tropi,110,78,150.0,SUP04
+P333,beverage,Packaged Water,AquaPure,20,11,365.0,SUP05
+P334,Beverages,Energy Drink,ZapUp,125,88,,SUP05
+P442,Snacks,Biscuits,Crispo,35,22,240.0,SUP06
+P443,Snacks,Chips,Munchies,20,12,120.0,SUP06
+P444,Snacks,Namkeen,SpiceTime,55,37,150.0,SUP06
+P445,Snacks,Chocolates,ChocoMelt,40,28,300.0,SUP07
+P446, Snacks ,Noodles,Slurpy,14,10,270.0,SUP07
+P501,Groceries,Rice,GoldGrain,68,55,365.0,SUP03
+P502,Groceries,Cooking Oil,SunDrop,165,138,270.0,SUP03
+P503,Groceries,Sugar,,48,40,540.0,SUP03
+P504,Groceries,Tea,ChaiKing,120,92,365.0,SUP03
+P505,Groceries,Atta,HarvestGold,260,215,180.0,SUP03
+P506,Groceries,Bread,FreshBake,40,31,4.0,SUP09
+P205, Personal Care ,Shampoo,GlowCare,120,79,730.0,SUP08
+P206,Personal Care,Soap,PureBath,38,25,1095.0,SUP08
+P207,Personal Care,Toothpaste,SmileMax,95,62,730.0,SUP08
+P208,Personal Care,Face Wash,GlowCare,149,98,730.0,SUP08
+P601,household,Detergent,SparkleWash,130,98,730.0,SUP10
+P602,Household,Dishwash,CleanPro,99,68,730.0,SUP10
+P603,Household,Floor Cleaner,ShinyFloor,175,128,730.0,SUP10
+P604,Household,Tissue Paper,SoftTouch,60,42,1095.0,SUP10
+P701,Frozen,Ice Cream,ArcticJoy,50,33,180.0,SUP11
+P702,Frozen,Frozen Vegetables,FrostFresh,80,58,180.0,SUP11
+P703,Frozen,Frozen Snacks,CrunchyBite,220,165,150.0,SUP11
+P704,Frozen,Ice Cream,ArcticJoy,260,190,180.0,SUP11
+P447,Snacks,Chips,Munchies,30,18,120.0,SUP06
+P335,beverage,Soft Drink,FizzUp,55,34,180.0,SUP04
+P705,Frozen,Ice Cream,ArcticJoy,70,46,180.0,SUP11
+P205, Personal Care ,Shampoo,GlowCare,120,79,730.0,SUP08
