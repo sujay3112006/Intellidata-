@@ -1,0 +1,15 @@
+model,split,MAE,RMSE,MAPE,WAPE,R2,train_time_sec
+Baseline 1 (Rolling Mean 7x7),val,22.24,40.82,21.98,20.07,0.8563,0.0
+Baseline 2 (Lag 7x7),val,37.53,66.89,38.1,33.86,0.614,0.0
+Baseline 1 (Rolling Mean 7x7),test,23.59,40.19,21.51,19.68,0.8956,0.0
+Baseline 2 (Lag 7x7),test,39.62,65.98,38.19,33.04,0.7188,0.0
+Linear Regression,val,15.88,24.75,20.45,14.33,0.9472,0.162
+Linear Regression,test,18.97,32.65,23.4,15.82,0.9311,0.162
+KNN Regressor (k=7),val,19.49,29.65,22.58,17.59,0.9241,0.073
+KNN Regressor (k=7),test,24.15,38.95,25.72,20.14,0.902,0.073
+Decision Tree,val,16.84,26.93,16.92,15.19,0.9375,0.317
+Decision Tree,test,19.29,32.49,18.26,16.09,0.9318,0.317
+Random Forest,val,14.04,22.43,14.62,12.67,0.9566,5.957
+Random Forest,test,16.15,28.28,15.47,13.47,0.9483,5.957
+XGBoost,val,13.26,21.15,13.75,11.96,0.9614,2.41
+XGBoost,test,14.56,24.51,13.92,12.14,0.9612,2.41
