@@ -13,3 +13,4 @@ jupyter
 nbformat
 nbconvert
 ipykernel
+python-pptx

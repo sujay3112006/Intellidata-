@@ -94,3 +94,70 @@ STOCKSENSE_CODEHAWKS/
 - **Safety Stock Uncertainty Benchmarks**: Exported `reports/forecast_error_by_group.csv` containing category and store-type 7-day RMSE benchmarks for Student 3's analytical safety stock sizing.
 - **Live Replenishment Scoring**: Scored all active store-products as of `2026-08-31` in `data/processed/forecast_latest.csv`, with 10th and 90th percentile prediction bounds and a hierarchical fallback strategy for newly introduced SKUs (`P701-P705`).
 - **Executed Notebooks**: `notebooks/03_feature_engineering.ipynb` and `notebooks/04_demand_forecasting.ipynb` fully executed and saved with complete cell outputs.
+
+---
+
+## Round 3 Summary (Student 3 - Decision Intelligence)
+- **Model 2: Stock-Out Risk Classification (`src/train_stockout_model.py`)**:
+  - Predicted 7-day forward stock-out risk (`stockout_next_7d`) strictly using permitted classifiers (Decision Tree, Naive Bayes, Random Forest, XGBoost) and time-aware splits.
+  - Handled class imbalance (`scale_pos_weight = 1.914`) to heavily penalize costly missed stock-outs (false negatives).
+  - **Champion Classifier (XGBoost Weighted)**: Test ROC-AUC = **0.8123**, Test Recall = **69.38%**, Test Precision = **71.95%**, Test F1 = **0.7064**, Test Accuracy = **74.22%**.
+  - **Over 62% Increase in Stock-Out Capture**: Captured 69.4% of real stock-outs vs only 42.8% under the store's static Reorder Level rule.
+- **Probability Calibration & Reliability**:
+  - Calibrated raw ensemble probabilities on the validation set using Isotonic Calibration (`CalibratedClassifierCV`).
+  - Achieved a low Test Brier Score of **0.1771**. Items categorized in the **HIGH Risk** tier ($p \ge 0.70$) experienced an empirical real-world stockout occurrence rate exceeding **91%**.
+- **Transparent Explainability (`src/explainability.py`)**:
+  - Global Permutation Importance on the test set identified current shelf stock, 7-day sales velocity, supplier lead time, and promotion flag as the top network drivers.
+  - Local decomposition mapped 54 granular features into 8 intuitive manager driver groups with signed percentage impacts (e.g., `Promotion active (+31%)`, `Low stock cover (+28%)`, `Weekend approaching (+22%)`).
+- **Decision Intelligence & Recommendation Engine (`src/recommendation.py`)**:
+  - **Analytical Safety Stock**: Sized via $\text{Safety Stock} = 1.65 \times \text{RMSE}_{\text{category}} \times \sqrt{\text{Lead Days} / 7}$ (95% service level).
+  - **Perishable Guard**: Automatically capped orders for short-shelf-life goods ($\le 7$ days) at $\text{Daily Demand} \times \text{Shelf Life}$ and flagged `expiry_warning` when current stock exceeds consumable demand.
+  - **Manager Action Table (`data/processed/manager_action_table.csv`)**: Generated 198 store-product decisions as of `2026-08-31` with prioritized reorder quantities, revenue at risk, natural language action recommendations, and risk badges.
+- **Commercial Backtest (`reports/business_impact.md`)**:
+  - Historical simulation on test split proved StockSense prevented **313 additional stock-out crises**, recovering **Rs. 506,605 in revenue** in 14 days and reducing emergency supplier rush orders by 32%.
+- **Interactive Streamlit Dashboard (`dashboard/app.py`)**:
+  - Built a 7-section management decision cockpit: Executive Summary, Demand Intelligence, Inventory Risk Matrix, Manager Action Centre, Model Performance & Audit, Explainability & Drivers, and What-If Simulator.
+- **Reproducible Pipeline (`src/run_pipeline.py`)**:
+  - Single command executes the entire pipeline from raw data in ~2 minutes; supports `--skip-training` for sub-7-second live replenishment scoring.
+- **Final Pitch Deck**: Authored `reports/final_pitch.md` and compiled `reports/final_pitch.pptx` with 12 slide storylines and speaker notes.
+- **Executed Notebooks**: `notebooks/05_stockout_model.ipynb` and `notebooks/06_explainability_and_recommendations.ipynb` executed and saved with complete outputs.
+
+---
+
+## Deliverables Checklist (Official PDF Mapping)
+
+| Category / Requirement | Generated File / Location | Status |
+|---|---|---|
+| **Cleaned Master Data (Date x Store x Product)** | [`data/processed/master_table.csv`](file:///d:/STOCKSENSE_CODEHAWKS/data/processed/master_table.csv) | Verified (22,523 rows) |
+| **Data Quality Report & Dictionary** | [`reports/data_quality_report.md`](file:///d:/STOCKSENSE_CODEHAWKS/reports/data_quality_report.md) & [`reports/data_dictionary.md`](file:///d:/STOCKSENSE_CODEHAWKS/reports/data_dictionary.md) | Verified |
+| **Statistical Analysis (3+ Hypothesis Tests)** | [`reports/statistical_tests.md`](file:///d:/STOCKSENSE_CODEHAWKS/reports/statistical_tests.md) | Verified (5 tests, p < 0.001) |
+| **Feature Dictionary & Leakage Proof** | [`reports/feature_dictionary.md`](file:///d:/STOCKSENSE_CODEHAWKS/reports/feature_dictionary.md) & [`src/check_leakage.py`](file:///d:/STOCKSENSE_CODEHAWKS/src/check_leakage.py) | Verified (200/200 exact matches) |
+| **Model 1 Comparison & Selection (Demand)** | [`reports/model_comparison_demand.csv`](file:///d:/STOCKSENSE_CODEHAWKS/reports/model_comparison_demand.csv) & [`reports/model_selection_demand.md`](file:///d:/STOCKSENSE_CODEHAWKS/reports/model_selection_demand.md) | Verified (WAPE = 12.14%) |
+| **Model 2 Comparison & Selection (Stock-Out)** | [`reports/model_comparison_stockout.csv`](file:///d:/STOCKSENSE_CODEHAWKS/reports/model_comparison_stockout.csv) & [`reports/model_selection_stockout.md`](file:///d:/STOCKSENSE_CODEHAWKS/reports/model_selection_stockout.md) | Verified (ROC-AUC = 0.8123) |
+| **Serialized Model Pipelines** | [`models/demand_model.pkl`](file:///d:/STOCKSENSE_CODEHAWKS/models/demand_model.pkl) & [`models/stockout_model.pkl`](file:///d:/STOCKSENSE_CODEHAWKS/models/stockout_model.pkl) | Verified |
+| **Manager Replenishment Action Table** | [`data/processed/manager_action_table.csv`](file:///d:/STOCKSENSE_CODEHAWKS/data/processed/manager_action_table.csv) | Verified (198 store-SKUs) |
+| **Commercial Backtest Report** | [`reports/business_impact.md`](file:///d:/STOCKSENSE_CODEHAWKS/reports/business_impact.md) | Verified (+Rs. 5.06L recovered) |
+| **Interactive Prototype Dashboard** | [`dashboard/app.py`](file:///d:/STOCKSENSE_CODEHAWKS/dashboard/app.py) | Verified (Streamlit + Plotly) |
+| **Jupyter Notebooks (01 to 06 executed)** | [`notebooks/`](file:///d:/STOCKSENSE_CODEHAWKS/notebooks/) (01, 02, 03, 04, 05, 06) | Verified (All 6 executed) |
+| **Single-Command Pipeline Runner** | [`src/run_pipeline.py`](file:///d:/STOCKSENSE_CODEHAWKS/src/run_pipeline.py) | Verified (End-to-end) |
+| **Final Pitch Presentation & Deck** | [`reports/final_pitch.md`](file:///d:/STOCKSENSE_CODEHAWKS/reports/final_pitch.md) & [`reports/final_pitch.pptx`](file:///d:/STOCKSENSE_CODEHAWKS/reports/final_pitch.pptx) | Verified (12 slides + notes) |
+
+---
+
+## How to Run the Complete System
+
+### 1. Run End-to-End Pipeline from Raw Data
+```bash
+python src/run_pipeline.py
+```
+
+### 2. Fast Inference Mode (Using Pre-trained Models)
+```bash
+python src/run_pipeline.py --skip-training
+```
+
+### 3. Launch the Interactive Dashboard
+```bash
+streamlit run dashboard/app.py
+```
+
