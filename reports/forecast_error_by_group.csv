@@ -1,0 +1,12 @@
+group_type,group_value,rmse_7day,mae_7day,wape,observation_count
+overall,All NovaMart SKUs,24.51,14.56,12.14,2583
+category,Beverages,32.93,20.59,12.02,378
+category,Dairy,33.08,18.46,13.32,378
+category,Frozen,10.52,7.78,13.72,338
+category,Groceries,26.75,16.36,11.92,476
+category,Household,9.25,6.91,11.64,308
+category,Personal Care,12.86,9.42,12.68,336
+category,Snacks,26.96,19.32,11.01,369
+store_type,Express,13.8,9.48,14.96,838
+store_type,Hypermarket,46.9,31.55,11.68,468
+store_type,Supermarket,16.86,11.66,11.45,1277
