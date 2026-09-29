@@ -73,3 +73,24 @@ STOCKSENSE_CODEHAWKS/
   - **Promotion Lift**: +48.57% daily sales volume increase
 - **Statistical Tests**: 5 hypothesis tests executed ($\alpha = 0.05$, all $p < 0.001$), confirming statistically significant promotion lift, store format volume variance, weekend sales surges, and lead-time stock-out risks.
 - **Notebooks**: `notebooks/01_data_quality_and_cleaning.ipynb` and `notebooks/02_eda_and_statistics.ipynb` fully executed with saved outputs.
+
+---
+
+## Round 2 Summary (Student 2 - Machine Learning Engineer)
+- **Censored Demand Reconstruction (`demand_adj`)**: Corrected hidden lost sales on 1,186 stock-out days (5.27% of dataset), uncovering **10,565.25 unfulfilled demand units** to prevent downward-biased machine learning forecasts.
+- **Leakage Prevention Proof**: Engineered 30+ features across 8 groups strictly using information available at prediction time $t$. Verified with an automated empirical proof (`src/check_leakage.py`) testing 200 random observations against truncated past-only data (**100% exact numerical match, zero leakage**).
+- **Time-Aware Splitting**: Divided history chronologically with strict 7-day buffer gaps to prevent target overlap:
+  - `Train`: 2026-05-15 to 2026-07-10 (10,374 rows, 46.1%)
+  - `Gap 1`: 2026-07-11 to 2026-07-17 (7-day buffer)
+  - `Validation`: 2026-07-18 to 2026-08-03 (3,094 rows, 13.7%)
+  - `Gap 2`: 2026-08-04 to 2026-08-10 (7-day buffer)
+  - `Test`: 2026-08-11 to 2026-08-24 (2,583 rows, 11.5%)
+  - `Unlabeled / Scoring`: 2026-08-25 to 2026-08-31 (1,376 rows)
+- **Model 1 Benchmark & Selection**: Evaluated strictly permitted algorithms (Linear Regression, Decision Tree, Random Forest, KNN, XGBoost) against Naive Rolling Mean & Lag-7 baselines:
+  - **Naive Rolling Mean Baseline**: Val WAPE = 20.07%, Test WAPE = 19.68%, Test RMSE = 40.19, $R^2 = 0.8956$
+  - **Champion (XGBoost Regressor)**: Val WAPE = **11.96%**, Test WAPE = **12.14%**, Test MAE = **14.56 units**, Test RMSE = **24.51 units**, Test $R^2 = \mathbf{0.9612}$
+  - **Baseline Reduction**: **38.3% WAPE reduction** and **39.0% RMSE reduction** on unseen test data. Minimal generalization gap (< 0.2% WAPE shift).
+- **Managerial Error Diagnostics**: Generated 6 publication-ready charts in `reports/figures/model_*.png` covering actual vs predicted parity, top-SKU timelines, zero-bias residual distribution (mean bias = -0.04 units), category/store error breakdowns, operational condition impacts, and split-gain vs permutation feature importances.
+- **Safety Stock Uncertainty Benchmarks**: Exported `reports/forecast_error_by_group.csv` containing category and store-type 7-day RMSE benchmarks for Student 3's analytical safety stock sizing.
+- **Live Replenishment Scoring**: Scored all active store-products as of `2026-08-31` in `data/processed/forecast_latest.csv`, with 10th and 90th percentile prediction bounds and a hierarchical fallback strategy for newly introduced SKUs (`P701-P705`).
+- **Executed Notebooks**: `notebooks/03_feature_engineering.ipynb` and `notebooks/04_demand_forecasting.ipynb` fully executed and saved with complete cell outputs.
